@@ -1,0 +1,1 @@
+const Restaurant ="assets/images/restaurant";
