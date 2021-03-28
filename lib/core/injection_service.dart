@@ -27,5 +27,7 @@ Future<void> init() async {
   /// register Geofence Bloc and all other Depindicis
   sl.registerLazySingleton<GeofenceRepository>(() => GeofenceRepositoryImpl());
   sl.registerFactory(() => GeofenceUC(geofenceRepository: sl()));
-  sl.registerFactory(() => GeofenceBloc(geofenceUC: sl()));
+  sl.registerFactory(() => SaveWifiSsidUC(geofenceRepository: sl()));
+  sl.registerFactory(
+      () => GeofenceBloc(geofenceUC: sl(), saveWifiSsidUC: sl()));
 }

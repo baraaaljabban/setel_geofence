@@ -30,15 +30,15 @@ class GeofenceRepositoryImpl extends GeofenceRepository {
 
   @override
   Future<Either<Failure, bool>> isInsideGeofence(
-      {double xPoint, double yPoint}) {
-    // TODO: implement isInsideGeofence
-    throw UnimplementedError();
-  }
+      {double xPoint, double yPoint}) {}
 
   @override
   Future<Either<Failure, String>> saveWifiSsid() async {
-    String wifiName = "";
+    return await saveCurrentWifiSsid();
+  }
 
+  Future<Either<Failure, String>> saveCurrentWifiSsid() async {
+    String wifiName = "";
     try {
       if (!kIsWeb && Platform.isIOS) {
         LocationAuthorizationStatus status =
@@ -58,9 +58,7 @@ class GeofenceRepositoryImpl extends GeofenceRepository {
       return Right(WE_SAVED_YOUR_WIFI + "$wifiName");
     } on PlatformException catch (e) {
       developer.log(e.toString());
-      return Left(UnknownFailuer(
-        message: COULD_NOT_GET_WITI_NAME,
-      ));
+      return Left(UnknownFailuer(message: COULD_NOT_GET_WITI_NAME));
     }
   }
 }
