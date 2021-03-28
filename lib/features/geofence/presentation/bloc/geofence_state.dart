@@ -19,3 +19,5 @@ class IsInsideState extends GeofenceState {
   final bool isInisde;
   IsInsideState({this.isInisde});
 }
+
+class Loading extends GeofenceState{}

@@ -2,6 +2,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:setel_geofanc/core/network_info.dart';
+import 'package:setel_geofanc/features/geofence/data/datasource/geofence_local_datasource.dart';
 import 'package:setel_geofanc/features/geofence/data/repository/geofence_repo_impl.dart';
 import 'package:setel_geofanc/features/geofence/domain/repository/geofence_repository.dart';
 import 'package:setel_geofanc/features/geofence/domain/usecases/geofence_uc.dart';
@@ -25,7 +26,14 @@ Future<void> init() async {
   sl.registerLazySingleton(() => sharedPreferences);
 
   /// register Geofence Bloc and all other Depindicis
-  sl.registerLazySingleton<GeofenceRepository>(() => GeofenceRepositoryImpl());
+  sl.registerLazySingleton<GeofenceLocalDataSource>(
+      () => GeofenceLocalDataSourceImpl(sharedPreferences: sl()));
+
+  sl.registerLazySingleton<GeofenceRepository>(() => GeofenceRepositoryImpl(
+        localDataSource: sl(),
+        wifiInfo: sl(),
+        // connectivity: sl(),
+      ));
   sl.registerFactory(() => GeofenceUC(geofenceRepository: sl()));
   sl.registerFactory(() => SaveWifiSsidUC(geofenceRepository: sl()));
   sl.registerFactory(

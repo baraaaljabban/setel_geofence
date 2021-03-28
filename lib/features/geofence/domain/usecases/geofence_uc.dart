@@ -10,8 +10,8 @@ class GeofenceUC extends UseCase<bool, GeofenceParams> {
   GeofenceUC({@required this.geofenceRepository});
 
   @override
-  Future<Either<Failure, bool>> call({GeofenceParams params}) {
-    return geofenceRepository.isInsideGeofence(
+  Future<Either<Failure, bool>> call({GeofenceParams params}) async{
+    return await geofenceRepository.isInsideGeofence(
       xPoint: params.xPoint,
       yPoint: params.yPoint,
     );
