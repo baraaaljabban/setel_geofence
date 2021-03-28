@@ -2,14 +2,19 @@ import 'package:connectivity/connectivity.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:setel_geofanc/core/network_info.dart';
+import 'package:setel_geofanc/features/geofence/data/repository/geofence_repo_impl.dart';
+import 'package:setel_geofanc/features/geofence/domain/repository/geofence_repository.dart';
+import 'package:setel_geofanc/features/geofence/domain/usecases/geofence_uc.dart';
+import 'package:setel_geofanc/features/geofence/presentation/bloc/geofence_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wifi_info_flutter/wifi_info_flutter.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
   sl.registerFactory(() => DataConnectionChecker());
   sl.registerFactory(() => Connectivity());
-
+  sl.registerFactory(() => WifiInfo());
   sl.registerLazySingleton<NetworkInfo>(
     () => NetworkInfoImpl(
       connectivity: sl(),
@@ -21,6 +26,6 @@ Future<void> init() async {
 
   /// register Geofence Bloc and all other Depindicis
   sl.registerLazySingleton<GeofenceRepository>(() => GeofenceRepositoryImpl());
-  sl.registerFactory(() => GeofenceUC(GeofenceRepository: sl()));
-  sl.registerFactory(() => GeofenceBloc(GeofenceUC: sl()));
+  sl.registerFactory(() => GeofenceUC(geofenceRepository: sl()));
+  sl.registerFactory(() => GeofenceBloc(geofenceUC: sl()));
 }
