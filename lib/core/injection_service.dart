@@ -19,10 +19,8 @@ Future<void> init() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
 
-  /// register Restaurant Bloc and all other Depindicis
-  sl.registerLazySingleton<RestaurantRepository>(() => RestaurantRepositoryImpl(
-        networkInfo: sl(),
-      ));
-  sl.registerFactory(() => RestaurantUC(restaurantRepository: sl()));
-  sl.registerFactory(() => RestaurantBloc(restaurantUC: sl()));
+  /// register Geofence Bloc and all other Depindicis
+  sl.registerLazySingleton<GeofenceRepository>(() => GeofenceRepositoryImpl());
+  sl.registerFactory(() => GeofenceUC(GeofenceRepository: sl()));
+  sl.registerFactory(() => GeofenceBloc(GeofenceUC: sl()));
 }
