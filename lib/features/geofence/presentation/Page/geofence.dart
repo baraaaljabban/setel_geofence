@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class GepfencePage extends StatefulWidget {
-  GepfencePage({Key key}) : super(key: key);
+class GeofenceBlocPage extends StatefulWidget {
+  GeofenceBlocPage({Key key}) : super(key: key);
 
   @override
-  _GepfencePageState createState() => _GepfencePageState();
+  _GeofenceBlocPageState createState() => _GeofenceBlocPageState();
 }
 
-class _GepfencePageState extends State<GepfencePage> {
+class _GeofenceBlocPageState extends State<GeofenceBlocPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
