@@ -5,6 +5,7 @@ import 'package:setel_geofanc/core/network_info.dart';
 import 'package:setel_geofanc/features/geofence/data/datasource/geofence_local_datasource.dart';
 import 'package:setel_geofanc/features/geofence/data/repository/geofence_repo_impl.dart';
 import 'package:setel_geofanc/features/geofence/domain/repository/geofence_repository.dart';
+import 'package:setel_geofanc/features/geofence/domain/usecases/export_uc.dart';
 import 'package:setel_geofanc/features/geofence/domain/usecases/geofence_uc.dart';
 import 'package:setel_geofanc/features/geofence/presentation/bloc/geofence_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,6 +37,11 @@ Future<void> init() async {
       ));
   sl.registerFactory(() => GeofenceUC(geofenceRepository: sl()));
   sl.registerFactory(() => SaveWifiSsidUC(geofenceRepository: sl()));
-  sl.registerFactory(
-      () => GeofenceBloc(geofenceUC: sl(), saveWifiSsidUC: sl()));
+  sl.registerFactory(() => SaveCicleUC(geofenceRepository: sl()));
+
+  sl.registerFactory(() => GeofenceBloc(
+        geofenceUC: sl(),
+        saveWifiSsidUC: sl(),
+        saveCicleUC: sl(),
+      ));
 }

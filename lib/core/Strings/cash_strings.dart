@@ -1,2 +1,4 @@
 const CASHED_WIFI = "CASHED_WIFI";
-const WE_SAVED_YOUR_WIFI = "we saved your wifi :";
+const CIRCLE_X_POINT = "CIRCLE_X_POINT";
+const CIRCLE_Y_POINT = "CIRCLE_Y_POINT";
+const CIRCLE_RADIUS = "CIRCLE_RADIUS";

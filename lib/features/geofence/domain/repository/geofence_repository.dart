@@ -15,6 +15,13 @@ abstract class GeofenceRepository {
     @required double yPoint,
   });
   // Either return success message or failuer
-  Future<Either<Failure, String>> saveWifiSsid();
+  Future<Either<Failure, String>> saveWifiSsid({
+    String wifiSSID,
+  });
   Future<Either<Failure, String>> getSavedWifiSsid();
+  Future<Either<Failure, String>> saveCircleConfig({
+    @required double xPoint,
+    @required double yPoint,
+    @required double radius,
+  });
 }

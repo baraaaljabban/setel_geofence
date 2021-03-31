@@ -1,17 +1,11 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
-import 'package:setel_geofanc/core/Strings/cash_strings.dart';
+import 'package:setel_geofanc/core/Strings/export_strings.dart';
+import 'package:setel_geofanc/core/app_utils.dart';
 import 'package:setel_geofanc/error/exceptions.dart';
-import 'package:setel_geofanc/error/failuer_string.dart';
 import 'package:setel_geofanc/error/failures.dart';
 import 'package:dartz/dartz.dart';
 import 'package:setel_geofanc/features/geofence/data/datasource/geofence_local_datasource.dart';
 import 'package:setel_geofanc/features/geofence/domain/repository/geofence_repository.dart';
 import 'package:wifi_info_flutter/wifi_info_flutter.dart';
-import 'dart:developer' as developer;
-import 'package:permission_handler/permission_handler.dart';
 
 class GeofenceRepositoryImpl extends GeofenceRepository {
   final GeofenceLocalDataSource localDataSource;
@@ -36,48 +30,33 @@ class GeofenceRepositoryImpl extends GeofenceRepository {
       {double xPoint, double yPoint}) {}
 
   @override
-  Future<Either<Failure, String>> saveWifiSsid() async {
-    return await saveCurrentWifiSsid();
+  Future<Either<Failure, String>> saveWifiSsid({
+    String wifiSSID,
+  }) async {
+    if (wifiSSID == null || wifiSSID.isEmpty)
+      return await saveCurrentWifiSsid(wifiInfo: wifiInfo);
+    else {
+      try {
+        localDataSource.saveWifiSsid(wifiName: wifiSSID);
+        return Right(WE_SAVED_YOUR_WIFI + "$wifiSSID");
+      } on CacheException catch (_) {
+        return Left(CacheFailure(message: SOME_THING_WENT_WROING));
+      }
+    }
   }
 
-  Future<Either<Failure, String>> saveCurrentWifiSsid() async {
-    String wifiName = "";
-    if (await Permission.location.isGranted  && await Permission.locationWhenInUse.serviceStatus.isEnabled) {
-      // Use location.
-      try {
-        if (!kIsWeb && Platform.isIOS) {
-          LocationAuthorizationStatus status =
-              await wifiInfo.getLocationServiceAuthorization();
-          if (status == LocationAuthorizationStatus.notDetermined) {
-            status = await wifiInfo.requestLocationServiceAuthorization();
-          }
-          if (status == LocationAuthorizationStatus.authorizedAlways ||
-              status == LocationAuthorizationStatus.authorizedWhenInUse) {
-            wifiName = await wifiInfo.getWifiName();
-          } else {
-            wifiName = await wifiInfo.getWifiName();
-          }
-        } else {
-          wifiName = await wifiInfo.getWifiName();
-        }
-        if (wifiName != null || wifiName.isNotEmpty)
-          return Right(WE_SAVED_YOUR_WIFI + "$wifiName");
-        else
-          return Left(UnknownFailuer(message: COULD_NOT_GET_WITI_NAME));
-      } on PlatformException catch (e) {
-        developer.log(e.toString());
-        return Left(UnknownFailuer(message: COULD_NOT_GET_WITI_NAME));
-      } catch (e) {
-        developer.log(e.toString());
-        return Left(UnknownFailuer(message: COULD_NOT_GET_WITI_NAME));
-      }
-    } else {
-      final r = await Permission.location.request();
-      openAppSettings();
-      if (r.isDenied)
-        return Left(UnknownFailuer(message: GIVE_PERMISSION));
-      else
-        return Right("got access");
+  @override
+  Future<Either<Failure, String>> saveCircleConfig(
+      {double xPoint, double yPoint, double radius}) async {
+    try {
+      localDataSource.saveCircleConfig(
+        xPoint: xPoint,
+        yPoint: yPoint,
+        radius: radius,
+      );
+      return Right(WE_SAVED_YOUR_CIRCLE);
+    } on CacheException catch (_) {
+      return Left(CacheFailure(message: COULDNT_SAVE_CIRCLE));
     }
   }
 }

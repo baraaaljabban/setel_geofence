@@ -12,6 +12,13 @@ abstract class GeofenceLocalDataSource {
 
   /// restore `Wifi Name` from the local database
   String getSavedWifiSsid();
+
+  //save Circle Config
+  void saveCircleConfig({
+    @required double xPoint,
+    @required double yPoint,
+    @required double radius,
+  });
 }
 
 /// [GeofenceLocalDataSourceImpl] [class] is to save and restore data from
@@ -35,5 +42,12 @@ class GeofenceLocalDataSourceImpl extends GeofenceLocalDataSource {
   void saveWifiSsid({String wifiName}) {
     developer.log("the wifi name will be saved like : $wifiName");
     sharedPreferences.setString(CASHED_WIFI, wifiName);
+  }
+
+  @override
+  void saveCircleConfig({double xPoint, double yPoint, double radius}) {
+    sharedPreferences.setDouble(CIRCLE_X_POINT, xPoint);
+    sharedPreferences.setDouble(CIRCLE_Y_POINT, yPoint);
+    sharedPreferences.setDouble(CIRCLE_RADIUS, radius);
   }
 }

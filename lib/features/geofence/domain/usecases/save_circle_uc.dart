@@ -4,24 +4,26 @@ import 'package:setel_geofanc/core/use_cases.dart';
 import 'package:setel_geofanc/error/failures.dart';
 import 'package:setel_geofanc/features/geofence/domain/repository/geofence_repository.dart';
 
-class GeofenceUC extends UseCase<bool, GeofenceParams> {
+class SaveCicleUC extends UseCase<String, CicleParams> {
   final GeofenceRepository geofenceRepository;
 
-  GeofenceUC({@required this.geofenceRepository});
+  SaveCicleUC({@required this.geofenceRepository});
 
   @override
-  Future<Either<Failure, bool>> call({GeofenceParams params}) async{
-    return await geofenceRepository.isInsideGeofence(
+  Future<Either<Failure, String>> call({CicleParams params}) async {
+    return await geofenceRepository.saveCircleConfig(
       xPoint: params.xPoint,
       yPoint: params.yPoint,
+      radius: params.radius,
     );
   }
 }
 
-class GeofenceParams {
-  final double xPoint, yPoint;
-  GeofenceParams({
+class CicleParams {
+  final double xPoint, yPoint, radius;
+  CicleParams({
     @required this.xPoint,
     @required this.yPoint,
+    @required this.radius,
   });
 }
