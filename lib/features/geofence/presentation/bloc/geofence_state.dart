@@ -20,4 +20,6 @@ class IsInsideState extends GeofenceState {
   IsInsideState({this.isInisde});
 }
 
-class Loading extends GeofenceState{}
+class Loading extends GeofenceState {}
+
+class GoToConfigControllerState extends GeofenceState {}

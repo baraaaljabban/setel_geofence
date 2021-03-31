@@ -6,3 +6,5 @@ abstract class GeofenceEvent {}
 class SaveWifiSsidEvent extends GeofenceEvent {}
 
 class IsInsideEvent extends GeofenceEvent {}
+
+class GoToConfigEvent extends GeofenceEvent {}
