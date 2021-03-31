@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:setel_geofanc/error/failures.dart';
+import 'package:setel_geofanc/features/geofence/data/model/circle_model.dart';
 
 /// [GeofenceRepository] [class] has 3 main functions
 ///
@@ -24,4 +25,6 @@ abstract class GeofenceRepository {
     @required double yPoint,
     @required double radius,
   });
+
+  Future<Either<Failure, CircleModel>> getCircleConfig();
 }

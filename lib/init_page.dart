@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:setel_geofanc/features/geofence/presentation/Page/widgets/config_controller.dart';
 
 import 'core/injection_service.dart';
 import 'features/geofence/presentation/Page/geofence.dart';
@@ -20,6 +21,11 @@ class _AppState extends State<App> {
         BlocProvider<GeofenceBloc>(
           create: (BuildContext context) => sl<GeofenceBloc>(),
           child: GeofenceBlocPage(),
+        ),
+        //TODO: either spreate pages and blocs || change Navigation way
+        BlocProvider<GeofenceBloc>(
+          create: (BuildContext context) => sl<GeofenceBloc>(),
+          child: ConfigController(),
         ),
       ],
       child: MaterialApp(

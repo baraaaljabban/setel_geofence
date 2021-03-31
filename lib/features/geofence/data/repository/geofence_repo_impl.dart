@@ -4,6 +4,7 @@ import 'package:setel_geofanc/error/exceptions.dart';
 import 'package:setel_geofanc/error/failures.dart';
 import 'package:dartz/dartz.dart';
 import 'package:setel_geofanc/features/geofence/data/datasource/geofence_local_datasource.dart';
+import 'package:setel_geofanc/features/geofence/data/model/circle_model.dart';
 import 'package:setel_geofanc/features/geofence/domain/repository/geofence_repository.dart';
 import 'package:wifi_info_flutter/wifi_info_flutter.dart';
 
@@ -57,6 +58,15 @@ class GeofenceRepositoryImpl extends GeofenceRepository {
       return Right(WE_SAVED_YOUR_CIRCLE);
     } on CacheException catch (_) {
       return Left(CacheFailure(message: COULDNT_SAVE_CIRCLE));
+    }
+  }
+
+  @override
+  Future<Either<Failure, CircleModel>> getCircleConfig() async {
+    try {
+      return Right(localDataSource.getCircleConfig());
+    } on CacheException catch (e) {
+      return Left(CacheFailure(message: e.message));
     }
   }
 }

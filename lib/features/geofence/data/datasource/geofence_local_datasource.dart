@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:setel_geofanc/core/Strings/cash_strings.dart';
 import 'package:setel_geofanc/error/exceptions.dart';
+import 'package:setel_geofanc/features/geofence/data/model/circle_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer' as developer;
 
@@ -12,7 +13,7 @@ abstract class GeofenceLocalDataSource {
 
   /// restore `Wifi Name` from the local database
   String getSavedWifiSsid();
-
+  CircleModel getCircleConfig();
   //save Circle Config
   void saveCircleConfig({
     @required double xPoint,
@@ -46,8 +47,26 @@ class GeofenceLocalDataSourceImpl extends GeofenceLocalDataSource {
 
   @override
   void saveCircleConfig({double xPoint, double yPoint, double radius}) {
+    developer.log(
+        "Circle Config saved like :\n xPoint $xPoint \n yPoint $radius\n yPoint $radius");
     sharedPreferences.setDouble(CIRCLE_X_POINT, xPoint);
     sharedPreferences.setDouble(CIRCLE_Y_POINT, yPoint);
     sharedPreferences.setDouble(CIRCLE_RADIUS, radius);
+  }
+
+  @override
+  CircleModel getCircleConfig() {
+    CircleModel circleModel = CircleModel(
+        xPoint: sharedPreferences.getDouble(CIRCLE_X_POINT),
+        yPoint: sharedPreferences.getDouble(CIRCLE_Y_POINT),
+        radius: sharedPreferences.getDouble(CIRCLE_RADIUS));
+    if (circleModel.radius == null || circleModel.radius == 0)
+      throw CacheException(message: "radius is null || 0");
+    else if (circleModel.xPoint == null || circleModel.xPoint == 0)
+      throw CacheException(message: "xPoint is null || 0");
+    else if (circleModel.yPoint == null || circleModel.yPoint == 0)
+      throw CacheException(message: "yPoint is null || 0");
+    else
+      return circleModel;
   }
 }
