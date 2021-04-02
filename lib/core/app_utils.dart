@@ -42,7 +42,7 @@ Future<Either<Failure, String>> saveCurrentWifiSsid(
           wifiName = await wifiInfo.getWifiName();
         }
         if (wifiName != null || wifiName.isNotEmpty)
-          return Right(WE_SAVED_YOUR_WIFI + "$wifiName");
+          return Right(wifiName);
         else
           return Left(UnknownFailuer(message: COULD_NOT_GET_WITI_NAME));
       } on PlatformException catch (e) {

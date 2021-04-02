@@ -158,6 +158,5 @@ class _GeofenceBlocPageState extends State<GeofenceBlocPage> {
       MaterialPageRoute(builder: (context) => ConfigController()),
     );
 
-    // BlocProvider.of<GeofenceBloc>(context).add(GoToConfigEvent());
   }
 }

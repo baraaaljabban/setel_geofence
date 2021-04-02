@@ -61,9 +61,15 @@ class GeofenceRepositoryImpl extends GeofenceRepository {
   Future<Either<Failure, String>> saveWifiSsid({
     String wifiSSID,
   }) async {
-    if (wifiSSID == null || wifiSSID.isEmpty)
-      return await saveCurrentWifiSsid(wifiInfo: wifiInfo);
-    else {
+    // TODO : refactor
+    if (wifiSSID == null || wifiSSID.isEmpty) {
+      final result = await saveCurrentWifiSsid(wifiInfo: wifiInfo);
+      result.fold(
+        (l) => null,
+        (r) => localDataSource.saveWifiSsid(wifiName: r),
+      );
+      return result;
+    } else {
       try {
         localDataSource.saveWifiSsid(wifiName: wifiSSID);
         return Right(WE_SAVED_YOUR_WIFI + "$wifiSSID");
