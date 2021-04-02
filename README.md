@@ -2,9 +2,9 @@
 
 
 ## FEATUERS
-1. Users can 
-2. Users will 
-3. Users can
+1. Users can save Wifi/circle config from configrations page  he can leave the wifi blank to get the current wifi or enter new wifi name by himselfe 
+2. Users can check if he is inside our outside the geofence from the main page 
+
 
 
 ## Development Environment /Tools/Languages
@@ -34,10 +34,10 @@ cd setel_geofence
 4. 
 
 ## Best Practise
-1. 
-2. 
-3. 
-4. 
+1. Implemente Seperation of Concerns by applying MVVM clean architecture
+2. Implement Dependency Injection for providing objects to required class by applying GET_IT library 
+3. Implement BLOC pattern in order to sperate busnis logic and user interaction and manage the state of the application 
+4. Implement UI/UX to show the user in fun way the current status 
 5. 
 
 
