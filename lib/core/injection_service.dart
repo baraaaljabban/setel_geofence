@@ -11,6 +11,8 @@ import 'package:setel_geofanc/features/geofence/presentation/bloc/geofence_bloc.
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wifi_info_flutter/wifi_info_flutter.dart';
 
+import 'app_utils.dart';
+
 final sl = GetIt.instance;
 
 Future<void> init() async {
@@ -25,6 +27,7 @@ Future<void> init() async {
   );
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
+  sl.registerLazySingleton(() => InputConverter());
 
   /// register Geofence Bloc and all other Depindicis
   sl.registerLazySingleton<GeofenceLocalDataSource>(
@@ -39,9 +42,12 @@ Future<void> init() async {
   sl.registerFactory(() => SaveWifiSsidUC(geofenceRepository: sl()));
   sl.registerFactory(() => SaveCicleUC(geofenceRepository: sl()));
 
-  sl.registerFactory(() => GeofenceBloc(
-        geofenceUC: sl(),
-        saveWifiSsidUC: sl(),
-        saveCicleUC: sl(),
-      ));
+  sl.registerFactory(
+    () => GeofenceBloc(
+      geofenceUC: sl(),
+      saveWifiSsidUC: sl(),
+      saveCicleUC: sl(),
+      inputConverter: sl(),
+    ),
+  );
 }

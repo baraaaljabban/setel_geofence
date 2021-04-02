@@ -9,3 +9,5 @@ const GIVE_PERMISSION = "pelase give the app permision";
 const SOME_THING_WENT_WROING = "something went worng";
 const COULDNT_SAVE_CIRCLE =
     "we were not able to save your circle something went worng";
+const ENABLE_LOCATION = "please enable location services first";
+const INVALID_INPUT = "pelase enter a valid number";

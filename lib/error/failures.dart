@@ -22,3 +22,7 @@ class UnExpectedServerResponseFailure extends Failure {
 class UnknownFailuer extends Failure {
   UnknownFailuer({String message}) : super(message);
 }
+
+class InvalidInputFailure extends Failure {
+  InvalidInputFailure(String message) : super(message);
+}

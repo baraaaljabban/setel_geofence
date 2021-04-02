@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:setel_geofanc/features/geofence/presentation/Page/widgets/config_controller.dart';
 
 import 'core/injection_service.dart';
-import 'features/geofence/presentation/Page/geofence.dart';
+import 'features/geofence/presentation/Page/geofence_page.dart';
 import 'features/geofence/presentation/bloc/geofence_bloc.dart';
 
 class App extends StatefulWidget {

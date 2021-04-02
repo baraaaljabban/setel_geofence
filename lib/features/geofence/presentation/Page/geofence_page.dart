@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:setel_geofanc/features/common/common_widgets.dart';
-import 'package:setel_geofanc/features/geofence/domain/usecases/geofence_uc.dart';
 import 'package:setel_geofanc/features/geofence/presentation/Page/widgets/config_controller.dart';
 import 'package:setel_geofanc/features/geofence/presentation/bloc/geofence_bloc.dart';
 

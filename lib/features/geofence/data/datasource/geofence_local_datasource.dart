@@ -48,7 +48,7 @@ class GeofenceLocalDataSourceImpl extends GeofenceLocalDataSource {
   @override
   void saveCircleConfig({double xPoint, double yPoint, double radius}) {
     developer.log(
-        "Circle Config saved like :\n xPoint $xPoint \n yPoint $radius\n yPoint $radius");
+        "Circle Config saved like :\n xPoint $xPoint \n yPoint $yPoint\n radius $radius");
     sharedPreferences.setDouble(CIRCLE_X_POINT, xPoint);
     sharedPreferences.setDouble(CIRCLE_Y_POINT, yPoint);
     sharedPreferences.setDouble(CIRCLE_RADIUS, radius);

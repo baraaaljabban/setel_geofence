@@ -9,7 +9,7 @@ class SaveWifiSsidUC extends UseCaseNoParams {
   SaveWifiSsidUC({@required this.geofenceRepository});
 
   @override
-  Future<Either<Failure, String>> call() async {
-    return await geofenceRepository.saveWifiSsid();
+  Future<Either<Failure, String>> call({String wifiSSID}) async {
+    return await geofenceRepository.saveWifiSsid(wifiSSID: wifiSSID);
   }
 }
