@@ -35,6 +35,8 @@ class GeofenceRepositoryImpl extends GeofenceRepository {
       final sotredCircle = localDataSource.getCircleConfig();
       final sotredWifi = localDataSource.getSavedWifiSsid();
       final currentWifi = await currentWifiSSID(wifiInfo: wifiInfo);
+      if (currentWifi == null || currentWifi.isEmpty)
+        return Left(UnknownFailuer(message: "please connect to WIFI"));
       if (sotredWifi == currentWifi)
         return Right(true);
       else {
