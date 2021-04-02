@@ -66,6 +66,26 @@ Future<Either<Failure, String>> saveCurrentWifiSsid(
   }
 }
 
+Future<String> currentWifiSSID({@required WifiInfo wifiInfo}) async {
+  String wifiName;
+  if (!kIsWeb && Platform.isIOS) {
+    LocationAuthorizationStatus status =
+        await wifiInfo.getLocationServiceAuthorization();
+    if (status == LocationAuthorizationStatus.notDetermined) {
+      status = await wifiInfo.requestLocationServiceAuthorization();
+    }
+    if (status == LocationAuthorizationStatus.authorizedAlways ||
+        status == LocationAuthorizationStatus.authorizedWhenInUse) {
+      wifiName = await wifiInfo.getWifiName();
+    } else {
+      wifiName = await wifiInfo.getWifiName();
+    }
+  } else {
+    wifiName = await wifiInfo.getWifiName();
+  }
+  return wifiName;
+}
+
 class InputConverter {
   ///check whether the values enterd by user are double accepted thene return it
   ///
@@ -90,6 +110,28 @@ class InputConverter {
       else if (r < 0) throw FormatException("radius format worng");
 
       return Right(Tuple3(x, y, r));
+    } on FormatException catch (e) {
+      return Left(InvalidInputFailure(e.message));
+    }
+  }
+
+  ///check whether the values enterd by user are double accepted thene return it
+  ///
+  ///`value1 = xPoint`
+  ///
+  ///`value2 = yPoint`
+  Either<Failure, Tuple2<double, double>> stringToUnsignedDouble2({
+    String xPoint,
+    String yPoint,
+  }) {
+    try {
+      final x = double.parse(xPoint);
+      final y = double.parse(yPoint);
+      if (x < 0)
+        throw FormatException("x format worng");
+      else if (y < 0) throw FormatException("y format worng");
+
+      return Right(Tuple2(x, y));
     } on FormatException catch (e) {
       return Left(InvalidInputFailure(e.message));
     }

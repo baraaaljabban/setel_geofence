@@ -18,6 +18,10 @@ class SaveCircleEvent extends GeofenceEvent {
   });
 }
 
-class IsInsideEvent extends GeofenceEvent {}
+class IsInsideEvent extends GeofenceEvent {
+  final String xPoint, yPoint;
+
+  IsInsideEvent({this.xPoint, this.yPoint});
+}
 
 class GoToConfigEvent extends GeofenceEvent {}

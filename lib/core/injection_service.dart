@@ -2,6 +2,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:setel_geofanc/core/network_info.dart';
+import 'package:setel_geofanc/features/common/common_widgets.dart';
 import 'package:setel_geofanc/features/geofence/data/datasource/geofence_local_datasource.dart';
 import 'package:setel_geofanc/features/geofence/data/repository/geofence_repo_impl.dart';
 import 'package:setel_geofanc/features/geofence/domain/repository/geofence_repository.dart';
@@ -28,6 +29,7 @@ Future<void> init() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
   sl.registerLazySingleton(() => InputConverter());
+  sl.registerLazySingleton(() => CommonWidgets());
 
   /// register Geofence Bloc and all other Depindicis
   sl.registerLazySingleton<GeofenceLocalDataSource>(

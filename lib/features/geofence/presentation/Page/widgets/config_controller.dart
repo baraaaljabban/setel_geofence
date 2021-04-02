@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:setel_geofanc/core/injection_service.dart';
 import 'package:setel_geofanc/features/common/common_widgets.dart';
-import 'package:setel_geofanc/features/geofence/domain/usecases/save_circle_uc.dart';
 import 'package:setel_geofanc/features/geofence/presentation/bloc/geofence_bloc.dart';
 
+//TODO : refactor to be alon featuer
 class ConfigController extends StatefulWidget {
   ConfigController({Key key}) : super(key: key);
 
@@ -16,6 +17,7 @@ class _ConfigControllerState extends State<ConfigController> {
   TextEditingController circleXPointController = TextEditingController();
   TextEditingController circleRadiusController = TextEditingController();
   TextEditingController wifiSsidController = TextEditingController();
+  final CommonWidgets commonWidgets = sl<CommonWidgets>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +30,12 @@ class _ConfigControllerState extends State<ConfigController> {
       body: BlocListener<GeofenceBloc, GeofenceState>(
         listener: (context, state) {
           if (state is Error)
-            CommonWidgets.showErrorSnackBar(
+            commonWidgets.showErrorSnackBar(
               context,
               message: state.message,
             );
           else if (state is SuccessSaveWifiState)
-            CommonWidgets.showSuccessSnackBar(context, message: state.message);
+            commonWidgets.showSuccessSnackBar(context, message: state.message);
         },
         child: SingleChildScrollView(
           child: Container(
@@ -75,7 +77,7 @@ class _ConfigControllerState extends State<ConfigController> {
                   child: TextField(
                     controller: circleXPointController,
                     style: TextStyle(color: Colors.white),
-                    decoration: inputDecorations("X"),
+                    decoration: inputDecorations("Center X"),
                     keyboardType: TextInputType.number,
                   ),
                 ),
@@ -84,7 +86,7 @@ class _ConfigControllerState extends State<ConfigController> {
                   child: TextField(
                     controller: circleYPointController,
                     style: TextStyle(color: Colors.white),
-                    decoration: inputDecorations("Y"),
+                    decoration: inputDecorations("Center Y"),
                     keyboardType: TextInputType.number,
                   ),
                 ),
@@ -174,6 +176,9 @@ class _ConfigControllerState extends State<ConfigController> {
         radius: circleRadiusController.text,
       ),
     );
+    circleYPointController.clear();
+    circleXPointController.clear();
+    circleRadiusController.clear();
   }
 
   void _saveWifiEvent() {

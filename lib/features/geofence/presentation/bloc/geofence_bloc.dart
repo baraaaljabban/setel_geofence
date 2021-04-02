@@ -32,10 +32,26 @@ class GeofenceBloc extends Bloc<GeofenceEvent, GeofenceState> {
         (r) => SuccessSaveWifiState(message: r),
       );
     } else if (event is IsInsideEvent) {
-      final isInisde = await geofenceUC();
-      yield isInisde.fold(
-        (l) => Error(message: l.message),
-        (r) => IsInsideState(isInisde: r),
+      final inputEither = inputConverter.stringToUnsignedDouble2(
+        xPoint: event.xPoint,
+        yPoint: event.yPoint,
+      );
+      yield* inputEither.fold(
+        (failure) async* {
+          yield Error(message: failure.message);
+        },
+        (sucess) async* {
+          final isInisde = await geofenceUC(
+            params: GeofenceParams(
+              xPoint: sucess.value1,
+              yPoint: sucess.value2,
+            ),
+          );
+          yield isInisde.fold(
+            (l) => Error(message: l.message),
+            (r) => r ? IsInsideState() : IsOutInsideState(),
+          );
+        },
       );
     } else if (event is SaveCircleEvent) {
       //check first if the numbers are double accepted

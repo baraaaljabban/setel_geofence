@@ -34,7 +34,7 @@ class GeofenceLocalDataSourceImpl extends GeofenceLocalDataSource {
     String cachedWifi = sharedPreferences.getString(CASHED_WIFI);
     developer.log("the wifi in LocalDB is : $cachedWifi");
     if (cachedWifi == null || cachedWifi.isEmpty)
-      throw CacheException();
+      throw CacheException(message: "WIFI_ERROR");
     else
       return cachedWifi;
   }

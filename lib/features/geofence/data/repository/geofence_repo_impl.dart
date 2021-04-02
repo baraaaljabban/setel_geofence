@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:setel_geofanc/core/Strings/export_strings.dart';
 import 'package:setel_geofanc/core/app_utils.dart';
 import 'package:setel_geofanc/error/exceptions.dart';
@@ -28,7 +30,32 @@ class GeofenceRepositoryImpl extends GeofenceRepository {
 
   @override
   Future<Either<Failure, bool>> isInsideGeofence(
-      {double xPoint, double yPoint}) {}
+      {double xPoint, double yPoint}) async {
+    try {
+      final sotredCircle = localDataSource.getCircleConfig();
+      final sotredWifi = localDataSource.getSavedWifiSsid();
+      final currentWifi = await currentWifiSSID(wifiInfo: wifiInfo);
+      if (sotredWifi == currentWifi)
+        return Right(true);
+      else {
+        double dx = (xPoint - sotredCircle.xPoint).abs();
+        double dy = (yPoint - sotredCircle.yPoint).abs();
+        double r = sotredCircle.radius;
+
+        if (dx + dy <= r) return Right(true);
+        if (dx > r) return Right(false);
+        if (dy > r) return Right(false);
+        if (pow(dx, 2) + pow(dy, 2) <= pow(r, 2))
+          return Right(true);
+        else
+          return Right(false);
+      }
+    } on CacheException catch (e) {
+      return Left(CacheFailure(message: e.message));
+    } catch (e) {
+      return Left(CacheFailure());
+    }
+  }
 
   @override
   Future<Either<Failure, String>> saveWifiSsid({

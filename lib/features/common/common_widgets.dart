@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CommonWidgets {
-  static void showLoadingSnackBar(BuildContext context, {String message}) {
+  void showLoadingSnackBar(BuildContext context, {String message}) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -12,7 +12,7 @@ class CommonWidgets {
     );
   }
 
-  static void showErrorSnackBar(BuildContext context, {String message}) {
+  void showErrorSnackBar(BuildContext context, {String message}) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -22,7 +22,7 @@ class CommonWidgets {
     );
   }
 
-  static void showSuccessSnackBar(BuildContext context, {String message}) {
+  void showSuccessSnackBar(BuildContext context, {String message}) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -32,13 +32,30 @@ class CommonWidgets {
     );
   }
 
-  static void showWarningSnackBar(BuildContext context, {String message}) {
+  void showWarningSnackBar(BuildContext context, {String message}) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
         backgroundColor: Colors.orange,
       ),
+    );
+  }
+
+  InputDecoration inputDecorations(String hintText) {
+    return InputDecoration(
+      hintText: hintText,
+      hintStyle: TextStyle(color: Colors.white),
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.white)),
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.white)),
+      disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.white)),
+      contentPadding: EdgeInsets.all(8.0),
     );
   }
 }
