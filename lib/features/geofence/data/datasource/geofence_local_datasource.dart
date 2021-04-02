@@ -34,7 +34,7 @@ class GeofenceLocalDataSourceImpl extends GeofenceLocalDataSource {
     String cachedWifi = sharedPreferences.getString(CASHED_WIFI);
     developer.log("the wifi in LocalDB is : $cachedWifi");
     if (cachedWifi == null || cachedWifi.isEmpty)
-      throw CacheException(message: "WIFI_ERROR");
+      throw CacheException(message: "WIFI_ERROR : please save Wifi first");
     else
       return cachedWifi;
   }
@@ -61,11 +61,11 @@ class GeofenceLocalDataSourceImpl extends GeofenceLocalDataSource {
         yPoint: sharedPreferences.getDouble(CIRCLE_Y_POINT),
         radius: sharedPreferences.getDouble(CIRCLE_RADIUS));
     if (circleModel.radius == null || circleModel.radius == 0)
-      throw CacheException(message: "radius is null || 0");
+      throw CacheException(message: "radius (null or 0) please save circle config first!");
     else if (circleModel.xPoint == null || circleModel.xPoint == 0)
-      throw CacheException(message: "xPoint is null || 0");
+      throw CacheException(message: "xPoint (null or 0) please save circle config first!");
     else if (circleModel.yPoint == null || circleModel.yPoint == 0)
-      throw CacheException(message: "yPoint is null || 0");
+      throw CacheException(message: "yPoint (null or 0) please save circle config first!");
     else
       return circleModel;
   }
