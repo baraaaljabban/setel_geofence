@@ -54,7 +54,7 @@ main() {
     },
   );
 
-    group(
+  group(
     "stringToUnsignedDouble",
     () {
       test(
@@ -73,6 +73,28 @@ main() {
           );
           //assert
           expect(result, Left(InvalidInputFailure("")));
+        },
+      );
+    },
+  );
+
+  group(
+    "stringToUnsignedDouble",
+    () {
+      test(
+        "should return Left InvalidInputFailure",
+        () async {
+          // arrange
+          final xPoint = "-123";
+          final yPoint = "333";
+
+          //act
+          final result = inputConverter.stringToUnsignedDouble2(
+            xPoint: xPoint,
+            yPoint: yPoint,
+          );
+          //assert
+          expect(result, Left(InvalidInputFailure("x format worng")));
         },
       );
     },
