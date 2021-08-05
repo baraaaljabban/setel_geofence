@@ -44,5 +44,6 @@ cd setel_geofence
 5. the code is very commented so anyone can read it easly
 
 
+it's opend now. enjoy :)
 
 
